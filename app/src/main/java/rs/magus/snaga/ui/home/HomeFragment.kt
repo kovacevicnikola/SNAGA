@@ -12,18 +12,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import rs.magus.snaga.databinding.FragmentHomeBinding
-import rs.magus.snaga.db.ExerciseLogEntity
+import rs.magus.snaga.repository.datasources.db.entities.ExerciseEntity
+import rs.magus.snaga.repository.datasources.db.entities.ExerciseLogEntity
 import java.time.LocalDateTime
 
 class HomeFragment : Fragment() {
 
   private lateinit var homeViewModel: HomeViewModel
-  private var _autocompleteAdapter: ArrayAdapter<String>? = null
-private var _binding: FragmentHomeBinding? = null
+  private var _autocompleteAdapter: ArrayAdapter<ExerciseEntity>? = null
+  private var _binding: FragmentHomeBinding? = null
+
   // This property is only valid between onCreateView and
   // onDestroyView.
   private val binding get() = _binding!!
   private val autocompleteAdapter get() = _autocompleteAdapter!!
+
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -34,18 +37,20 @@ private var _binding: FragmentHomeBinding? = null
       ViewModelProvider(this).get(HomeViewModel::class.java)
 
     _binding = FragmentHomeBinding.inflate(inflater, container, false)
-    _autocompleteAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, homeViewModel.exerciseList)
-    binding.autoComplete.setAdapter(autocompleteAdapter)
+
     binding.npReps.minValue = 1
     binding.npReps.maxValue = 100
     binding.npSets.minValue = 1
     binding.npSets.maxValue = 12
+    binding.npWeight.minValue = 1
+    binding.npWeight.maxValue = 500
     binding.bSubmit.setOnClickListener {
       homeViewModel.viewModelScope.launch {
         homeViewModel.insertExerciseLog(
           ExerciseLogEntity(
-            1, binding.autoComplete.text.toString(),
-            binding.npSets.value, binding.npReps.value, LocalDateTime.now().toString()
+            1,//todo
+            binding.npSets.value, binding.npReps.value,
+            binding.npWeight.value.toDouble(), LocalDateTime.now().toString()
           )
         )
       }
@@ -55,6 +60,15 @@ private var _binding: FragmentHomeBinding? = null
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    homeViewModel.viewModelScope.launch {
+      _autocompleteAdapter = ArrayAdapter(
+        requireContext(),
+        android.R.layout.simple_dropdown_item_1line,
+        homeViewModel.getExercises()
+      )
+    }.invokeOnCompletion {
+      binding.autoComplete.setAdapter(autocompleteAdapter)
+    }
   }
 
   override fun onDestroyView() {
