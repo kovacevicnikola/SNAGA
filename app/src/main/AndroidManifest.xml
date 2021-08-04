@@ -8,11 +8,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SNAGA" >
+        android:name="rs.magus.snaga.StrengthApplication"
+
+        android:theme="@style/Theme.SNAGA">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.SNAGA.NoActionBar" >
+            android:theme="@style/Theme.SNAGA.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

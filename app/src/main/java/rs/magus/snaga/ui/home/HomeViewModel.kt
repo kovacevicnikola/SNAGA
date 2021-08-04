@@ -2,20 +2,21 @@ package rs.magus.snaga.ui.home
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import rs.magus.snaga.pojo.models.ExerciseData
 import rs.magus.snaga.repository.Repository
-import rs.magus.snaga.repository.datasources.db.entities.ExerciseEntity
 import rs.magus.snaga.repository.datasources.db.entities.ExerciseLogEntity
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
-    val exerciseList =
-        arrayOf("Deadlift", "Benchpress", "Overhead press", "Lat pulldowns", "Squats", "Face pulls")
+    var selectedExercise: ExerciseData? = null
+    var exercises: List<ExerciseData> = ArrayList()
     val repository: Repository = Repository(application)
     suspend fun insertExerciseLog(entity: ExerciseLogEntity) {
-        //todo database.wordDao().insertAll(entity)
+        repository.logExercise(entity)
     }
 
-    suspend fun getExercises(): List<ExerciseEntity> {
-        return repository.getExercises()
+    suspend fun getExercisesFromDB(): List<ExerciseData> {
+        exercises = repository.getExercises()
+        return exercises
     }
 
 }

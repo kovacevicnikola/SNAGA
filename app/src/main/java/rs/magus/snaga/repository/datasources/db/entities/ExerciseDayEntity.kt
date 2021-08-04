@@ -5,7 +5,5 @@ import rs.magus.snaga.pojo.constants.TableNames
 
 @Entity(tableName = TableNames.EXERCISE_DAY)
 class ExerciseDayEntity(
-    val dayEnum: Int,
     val name: String?,
-    val exerciseTypeEnum: Int
 ) : BaseEntity()

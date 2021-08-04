@@ -7,22 +7,20 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import rs.magus.snaga.repository.datasources.db.dao.ExerciseDao
 import rs.magus.snaga.repository.datasources.db.dao.ExerciseLogDao
-import rs.magus.snaga.repository.datasources.db.entities.ExerciseDayEntity
-import rs.magus.snaga.repository.datasources.db.entities.ExerciseDayExerciseEntity
-import rs.magus.snaga.repository.datasources.db.entities.ExerciseEntity
-import rs.magus.snaga.repository.datasources.db.entities.ExerciseLogEntity
+import rs.magus.snaga.repository.datasources.db.entities.*
 
 @Database(
     entities = [
         ExerciseEntity::class,
         ExerciseLogEntity::class,
         ExerciseDayEntity::class,
-        ExerciseDayExerciseEntity::class
+        ExerciseDayExerciseEntity::class,
+        ExerciseGroupEntity::class
     ],
     version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun wordDao(): ExerciseLogDao
+    abstract fun exerciseLogDao(): ExerciseLogDao
     abstract fun exerciseDao(): ExerciseDao
 
 
@@ -46,9 +44,10 @@ abstract class AppDatabase : RoomDatabase() {
                 super.onCreate(db)
 
                 db.execSQL(
-                    "INSERT INTO `Exercises` ('name', 'group') VALUES ('Deadlift', 'Back'), ('Lat pulldown', 'Back')," +
-                            "('Rows', 'Back') , ('Bench Press', 'Chest'); "
+                    "INSERT INTO `Exercises` ('name', 'group') VALUES ('Deadlift', 1), ('Lat pulldown', 1)," +
+                            "('Rows', 1) , ('Bench Press', 2); "
                 )
+                db.execSQL("INSERT INTO `ExerciseGroups` ('name', 'id') VALUES ('Back', 1), ('Chest', 2)")
             }
         }
     }
