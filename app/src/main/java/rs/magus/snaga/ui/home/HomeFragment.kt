@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import rs.magus.snaga.R
 import rs.magus.snaga.databinding.FragmentHomeBinding
 import rs.magus.snaga.pojo.models.ExerciseData
 import rs.magus.snaga.repository.datasources.db.entities.ExerciseLogEntity
@@ -37,8 +40,12 @@ class HomeFragment : Fragment() {
     homeViewModel =
       ViewModelProvider(this).get(HomeViewModel::class.java)
 
-    _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+    _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+    binding.homeViewModel = homeViewModel
+    binding.lifecycleOwner = viewLifecycleOwner
+    homeViewModel.selectedExercise.observe(viewLifecycleOwner, Observer { data ->
+      binding.npWeight.value = data.defaultWeight.roundToInt()
+    })
     binding.npReps.minValue = 1
     binding.npReps.maxValue = 100
     binding.npSets.minValue = 1
@@ -53,11 +60,11 @@ class HomeFragment : Fragment() {
   }
 
   private fun handleSubmitPressed() {
-    if (homeViewModel.selectedExercise != null) {
+    if (homeViewModel.selectedExercise.value != null) {
       homeViewModel.viewModelScope.launch {
         homeViewModel.insertExerciseLog(
           ExerciseLogEntity(
-            homeViewModel.selectedExercise!!.id,
+            homeViewModel.selectedExercise.value!!.id,
             binding.npSets.value, binding.npReps.value,
             binding.npWeight.value.toDouble(), LocalDateTime.now().toString()
           )
@@ -83,20 +90,14 @@ class HomeFragment : Fragment() {
   private fun autofillValues() {
     binding.autoComplete.setAdapter(autocompleteAdapter)
     binding.autoComplete.onItemClickListener = AdapterView.OnItemClickListener(this::onItemClick)
-    if (homeViewModel.exercises.isNotEmpty()) {
-      binding.npReps.value = homeViewModel.exercises.first().defaultReps
-      binding.npSets.value = homeViewModel.exercises.first().defaultSets
-      binding.npWeight.value = homeViewModel.exercises.first().defaultWeight.roundToInt()
 
-    }
+
   }
 
   private fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long): Unit {
     if (autocompleteAdapter.getItem(position) != null) {
-      homeViewModel.selectedExercise = autocompleteAdapter.getItem(position)!!
-      binding.npWeight.value = autocompleteAdapter.getItem(position)!!.defaultWeight.roundToInt()
-      binding.npSets.value = autocompleteAdapter.getItem(position)!!.defaultSets
-      binding.npReps.value = autocompleteAdapter.getItem(position)!!.defaultReps
+      homeViewModel.selectedExercise.postValue(autocompleteAdapter.getItem(position)!!)
+
     }
   }
 

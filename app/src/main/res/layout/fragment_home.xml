@@ -1,58 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp"
-    tools:context=".ui.home.HomeFragment" >
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+    <data>
+
+        <variable
+            name="homeViewModel"
+            type="rs.magus.snaga.ui.home.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/autoComplete"
-        />
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/autoComplete"
-        android:orientation="horizontal"
-        android:id="@+id/llNumberPickers"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        tools:context=".ui.home.HomeFragment">
 
-        <NumberPicker
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/npSets" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/autoComplete" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="X" />
+            app:layout_constraintTop_toBottomOf="@id/autoComplete"
+            android:orientation="horizontal"
+            android:id="@+id/llNumberPickers"
+            android:gravity="center">
 
-        <NumberPicker
-            android:layout_width="wrap_content"
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:value="@{homeViewModel.selectedExercise.defaultSets}"
+
+                android:id="@+id/npSets" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:value="@{homeViewModel.selectedExercise.defaultReps}"
+
+                android:id="@+id/npReps" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X" />
+
+            <NumberPicker
+                android:id="@+id/npWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/npReps" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="X" />
-
-        <NumberPicker
-            android:id="@+id/npWeight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SAČUVAJ"
-        android:id="@+id/bSubmit"
-        app:layout_constraintTop_toBottomOf="@id/llNumberPickers"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="SAČUVAJ"
+            android:id="@+id/bSubmit"
+            app:layout_constraintTop_toBottomOf="@id/llNumberPickers" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

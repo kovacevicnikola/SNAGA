@@ -34,7 +34,8 @@ abstract class AppDatabase : RoomDatabase() {
                 context.applicationContext,
                 AppDatabase::class.java,
                 "main.sqlite3"
-            ).addCallback(CALLBACK).build()
+            ).addCallback(CALLBACK)
+                .fallbackToDestructiveMigration().build()
             INSTANCE = instance
             instance
         }
