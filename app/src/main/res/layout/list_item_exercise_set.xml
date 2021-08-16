@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="selectedExercise"
+            type="rs.magus.snaga.pojo.models.ExerciseData" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llNumberPickers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/autoComplete">
+
+        <NumberPicker
+            android:id="@+id/npSets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@{selectedExercise.defaultSets}"
+            app:maxValue="@{120}"
+            app:minValue="@{1}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X" />
+
+        <NumberPicker
+            android:id="@+id/npReps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:value="@{selectedExercise.defaultReps}"
+            app:maxValue="@{120}"
+            app:minValue="@{1}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X" />
+
+        <NumberPicker
+            android:id="@+id/npWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:maxValue="@{500}"
+            app:minValue="@{1}" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
