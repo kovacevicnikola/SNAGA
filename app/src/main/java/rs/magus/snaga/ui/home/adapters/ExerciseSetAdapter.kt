@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import rs.magus.snaga.R
 import rs.magus.snaga.databinding.ListItemExerciseSetBinding
 import rs.magus.snaga.pojo.models.ExerciseData
-import rs.magus.snaga.ui.home.HomeViewModel
+import rs.magus.snaga.repository.datasources.db.entities.ExerciseLogEntity
+import rs.magus.snaga.ui.home.ExerciseLoggingViewModel
 
 class ExerciseSetAdapter(
-    private val viewModel: HomeViewModel,
-    private val lifecycleOwner: LifecycleOwner
+    private val viewModel: ExerciseLoggingViewModel,
+    private val lifecycleOwner: LifecycleOwner,
+    private var splitSets: Boolean
 ) :
     RecyclerView.Adapter<ExerciseSetAdapter.ExerciseSetViewHolder>() {
     var selectedExercise: ExerciseData? = null
@@ -33,10 +35,19 @@ class ExerciseSetAdapter(
         selectedExercise = exerciseData
         notifyDataSetChanged()
     }
+    fun swapSelection() {
+        splitSets = !splitSets
+        if (splitSets) notifyItemRangeInserted(1, itemCount)
+        else notifyItemRangeRemoved(1, itemCount)
+    }
 
     override fun getItemCount(): Int {
-        Log.d("NIKOLA", "" + selectedExercise?.defaultReps)
-        return selectedExercise?.defaultReps ?: 1
+        if (splitSets) return selectedExercise?.repsSetsAndWeight?.size?:1
+        return selectedExercise?.defaultReps?:1
+    }
+
+    fun getSets(): List<ExerciseLogEntity> {
+        return ArrayList() //todo
     }
 
     inner class ExerciseSetViewHolder(val binding: ListItemExerciseSetBinding) :

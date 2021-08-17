@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="rs.magus.snaga.ui.home.HomeFragment"
+        android:name="rs.magus.snaga.ui.home.ExerciseLoggingFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_exercise_logging" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="rs.magus.snaga.ui.gallery.GalleryFragment"
+        android:name="rs.magus.snaga.ui.setup.calendar.CalendarFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_calendar" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="rs.magus.snaga.ui.slideshow.SlideshowFragment"
+        android:name="rs.magus.snaga.ui.setup.SetupFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_setup" />
 </navigation>

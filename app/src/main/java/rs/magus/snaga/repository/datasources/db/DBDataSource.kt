@@ -16,4 +16,7 @@ class DBDataSource(
     suspend fun logExercise(entity: ExerciseLogEntity) {
         return db.exerciseLogDao().insert(entity)
     }
+    suspend fun logExercises(entities: List<ExerciseLogEntity>) {
+        return db.exerciseLogDao().insert(*entities.toTypedArray())
+    }
 }

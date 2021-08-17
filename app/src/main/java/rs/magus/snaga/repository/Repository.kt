@@ -15,4 +15,7 @@ data class Repository(val context: Context) {
     suspend fun logExercise(entity: ExerciseLogEntity) {
         dbDataSource.logExercise(entity)
     }
+    suspend fun logExercises(entities: List<ExerciseLogEntity>) {
+        return dbDataSource.logExercises(entities)
+    }
 }

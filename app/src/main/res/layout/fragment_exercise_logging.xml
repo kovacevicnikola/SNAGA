@@ -8,7 +8,7 @@
 
         <variable
             name="homeViewModel"
-            type="rs.magus.snaga.ui.home.HomeViewModel" />
+            type="rs.magus.snaga.ui.home.ExerciseLoggingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:padding="32dp"
-        tools:context=".ui.home.HomeFragment">
+        tools:context=".ui.home.ExerciseLoggingFragment">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:layout_width="match_parent"
@@ -33,10 +33,6 @@
             android:gravity="center"
             android:visibility="gone" />
 
-        <include
-            android:id="@+id/lExerciseSetsReps"
-            layout="@layout/list_item_exercise_set"
-            app:selectedExercise="@{homeViewModel.selectedExercise}" />
 
         <ImageButton
             android:id="@+id/ibSplit"
@@ -46,7 +42,7 @@
             android:src="@drawable/ic_baseline_call_split_24"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lExerciseSetsReps" />
+            app:layout_constraintTop_toBottomOf="@id/rvNumberPickers" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"

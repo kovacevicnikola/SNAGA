@@ -16,18 +16,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import rs.magus.snaga.R
-import rs.magus.snaga.databinding.FragmentHomeBinding
+import rs.magus.snaga.databinding.FragmentExerciseLoggingBinding
 import rs.magus.snaga.pojo.models.ExerciseData
 import rs.magus.snaga.repository.datasources.db.entities.ExerciseLogEntity
 import rs.magus.snaga.ui.home.adapters.ExerciseSetAdapter
 import java.time.LocalDateTime
 import kotlin.math.roundToInt
 
-class HomeFragment : Fragment() {
+class ExerciseLoggingFragment : Fragment() {
 
-  private lateinit var homeViewModel: HomeViewModel
+  private lateinit var exerciseLoggingViewModel: ExerciseLoggingViewModel
   private var _autocompleteAdapter: ArrayAdapter<ExerciseData>? = null
-  private var _binding: FragmentHomeBinding? = null
+  private var _binding: FragmentExerciseLoggingBinding? = null
   private var _exerciseSetAdapter: ExerciseSetAdapter? = null
 
   // This property is only valid between onCreateView and
@@ -42,16 +42,15 @@ class HomeFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    homeViewModel =
-      ViewModelProvider(this).get(HomeViewModel::class.java)
+    exerciseLoggingViewModel =
+      ViewModelProvider(this).get(ExerciseLoggingViewModel::class.java)
     _exerciseSetAdapter =
-      ExerciseSetAdapter(viewModel = homeViewModel, lifecycleOwner = viewLifecycleOwner)
-    _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-    binding.homeViewModel = homeViewModel
+      ExerciseSetAdapter(viewModel = exerciseLoggingViewModel, lifecycleOwner = viewLifecycleOwner, false)
+    _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_exercise_logging, container, false)
+    binding.homeViewModel = exerciseLoggingViewModel
     binding.lifecycleOwner = viewLifecycleOwner
-    homeViewModel.selectedExercise.observe(viewLifecycleOwner, { data ->
-      Log.d("NIKOLA", "NOTIFY")
-      binding.lExerciseSetsReps.npWeight.value = data.defaultWeight.roundToInt()
+    exerciseLoggingViewModel.selectedExercise.observe(viewLifecycleOwner, { data ->
+     // binding.lExerciseSetsReps.npWeight.value = data.defaultWeight.roundToInt()
       exerciseSetAdapter.bindData(data)
     })
 
@@ -60,7 +59,7 @@ class HomeFragment : Fragment() {
     binding.ibSplit.setOnClickListener {
       binding.ibSplit.visibility = View.GONE
       binding.rvNumberPickers.visibility = View.VISIBLE
-      binding.lExerciseSetsReps.root.visibility = View.GONE
+     // binding.lExerciseSetsReps.root.visibility = View.GONE
     }
     binding.bSubmit.setOnClickListener {
       handleSubmitPressed()
@@ -70,15 +69,9 @@ class HomeFragment : Fragment() {
   }
 
   private fun handleSubmitPressed() {
-    if (homeViewModel.selectedExercise.value != null) {
-      homeViewModel.viewModelScope.launch {
-        homeViewModel.insertExerciseLog(
-          ExerciseLogEntity(
-            homeViewModel.selectedExercise.value!!.id,
-            binding.lExerciseSetsReps.npSets.value, binding.lExerciseSetsReps.npReps.value,
-            binding.lExerciseSetsReps.npWeight.value.toDouble(), LocalDateTime.now().toString()
-          )
-        )
+    if (exerciseLoggingViewModel.selectedExercise.value != null) {
+      exerciseLoggingViewModel.viewModelScope.launch {
+        exerciseLoggingViewModel.logExercises(exerciseSetAdapter.getSets())
       }
     } else {
       binding.autoComplete.requestFocus()
@@ -88,11 +81,11 @@ class HomeFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    homeViewModel.viewModelScope.launch {
+    exerciseLoggingViewModel.viewModelScope.launch {
       _autocompleteAdapter = ArrayAdapter(
         requireContext(),
         android.R.layout.simple_dropdown_item_1line,
-        homeViewModel.getExercisesFromDB()
+        exerciseLoggingViewModel.getExercisesFromDB()
       )
     }.invokeOnCompletion { autofillValues() }
   }
@@ -106,7 +99,7 @@ class HomeFragment : Fragment() {
 
   private fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long): Unit {
     if (autocompleteAdapter.getItem(position) != null) {
-      homeViewModel.selectedExercise.postValue(autocompleteAdapter.getItem(position)!!)
+      exerciseLoggingViewModel.selectedExercise.postValue(autocompleteAdapter.getItem(position)!!)
 
     }
   }

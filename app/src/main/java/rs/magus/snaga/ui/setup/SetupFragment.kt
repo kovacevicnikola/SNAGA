@@ -1,4 +1,4 @@
-package rs.magus.snaga.ui.gallery
+package rs.magus.snaga.ui.setup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import rs.magus.snaga.R
-import rs.magus.snaga.databinding.FragmentGalleryBinding
+import rs.magus.snaga.databinding.FragmentSetupBinding
 
-class GalleryFragment : Fragment() {
+class SetupFragment : Fragment() {
 
-  private lateinit var galleryViewModel: GalleryViewModel
-private var _binding: FragmentGalleryBinding? = null
+  private lateinit var setupViewModel: SetupViewModel
+private var _binding: FragmentSetupBinding? = null
   // This property is only valid between onCreateView and
   // onDestroyView.
   private val binding get() = _binding!!
@@ -23,15 +22,16 @@ private var _binding: FragmentGalleryBinding? = null
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
-    galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
+  ): View {
 
-    _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+    setupViewModel =
+            ViewModelProvider(this).get(SetupViewModel::class.java)
+
+    _binding = FragmentSetupBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
-    val textView: TextView = binding.textGallery
-    galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+    val textView: TextView = binding.textSlideshow
+    setupViewModel.text.observe(viewLifecycleOwner, Observer {
       textView.text = it
     })
     return root
