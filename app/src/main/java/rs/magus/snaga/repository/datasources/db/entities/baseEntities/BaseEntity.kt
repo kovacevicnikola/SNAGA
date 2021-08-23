@@ -1,4 +1,4 @@
-package rs.magus.snaga.repository.datasources.db.entities
+package rs.magus.snaga.repository.datasources.db.entities.baseEntities
 
 import androidx.room.PrimaryKey
 

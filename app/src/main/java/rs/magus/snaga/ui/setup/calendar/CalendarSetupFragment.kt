@@ -15,17 +15,18 @@ import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.*
 
-class CalendarFragment : Fragment() {
+class CalendarSetupFragment : Fragment() {
 
-  private lateinit var calendarViewModel: CalendarViewModel
-private var _binding: FragmentCalendarBinding? = null
-  // This property is only valid between onCreateView and
-  // onDestroyView.
-  private val binding get() = _binding!!
+    private lateinit var calendarViewModel: CalendarViewModel
+    private var _binding: FragmentCalendarBinding? = null
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
     calendarViewModel =

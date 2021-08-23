@@ -3,7 +3,7 @@ package rs.magus.snaga.repository.datasources.db.dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
-import rs.magus.snaga.repository.datasources.db.entities.BaseEntity
+import rs.magus.snaga.repository.datasources.db.entities.baseEntities.BaseEntity
 
 interface BaseDao<T : BaseEntity> {
 

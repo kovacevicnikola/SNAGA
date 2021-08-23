@@ -10,7 +10,7 @@ class DBDataSource(
     val db: AppDatabase = AppDatabase.getDatabase(context)
 
     suspend fun getExercises(): List<ExerciseData> {
-        return db.exerciseDao().getAll()
+        return ArrayList<ExerciseData>() //todo
     }
 
     suspend fun logExercise(entity: ExerciseLogEntity) {

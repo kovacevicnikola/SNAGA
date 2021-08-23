@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_setup">
 
     <fragment
         android:id="@+id/nav_home"
@@ -12,14 +12,10 @@
         tools:layout="@layout/fragment_exercise_logging" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="rs.magus.snaga.ui.setup.calendar.CalendarFragment"
+        android:id="@+id/nav_setup"
+        android:name="rs.magus.snaga.ui.setup.SetupFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_calendar" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="rs.magus.snaga.ui.setup.SetupFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_setup" />
+
 </navigation>

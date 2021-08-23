@@ -1,6 +1,5 @@
 package rs.magus.snaga.ui.home.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -42,8 +41,9 @@ class ExerciseSetAdapter(
     }
 
     override fun getItemCount(): Int {
-        if (splitSets) return selectedExercise?.repsSetsAndWeight?.size?:1
-        return selectedExercise?.defaultReps?:1
+//        if (splitSets) return selectedExercise?.repsSetsAndWeight?.size?:1
+//todo        return selectedExercise?.defaultReps?:1
+        return 0
     }
 
     fun getSets(): List<ExerciseLogEntity> {
