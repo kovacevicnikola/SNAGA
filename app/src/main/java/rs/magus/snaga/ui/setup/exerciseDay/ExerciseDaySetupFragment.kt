@@ -39,9 +39,9 @@ class ExerciseDaySetupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rvExerciseDays.layoutManager = LinearLayoutManager(context)
         binding.rvExerciseDays.adapter = adapter
-        binding.bAdd.setOnClickListener({
-            adapter.addView()
-        })
+        binding.bAdd.setOnClickListener {
+            if (!binding.rvExerciseDays.isComputingLayout) adapter.addView()
+        }
     }
 
     override fun onDestroyView() {

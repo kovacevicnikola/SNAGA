@@ -4,46 +4,62 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import rs.magus.snaga.R
 import rs.magus.snaga.databinding.ListItemExerciseDayBinding
-import rs.magus.snaga.repository.datasources.db.entities.ExerciseEntity
+import rs.magus.snaga.pojo.models.NewExerciseDayData
 
 class ExerciseDayRecyclerViewAdapter :
     RecyclerView.Adapter<ExerciseDayRecyclerViewAdapter.ExerciseDayViewHolder>() {
-    var size: Int = 1
-    var exerciseList: List<ExerciseEntity> = ArrayList()
-    var selectedItem: Int = 0
+    var exerciseList: MutableList<NewExerciseDayData> = ArrayList(
+        mutableListOf(
+            NewExerciseDayData(
+                MutableLiveData(""), ArrayList()
+            )
+        )
+    )
+    private var selectedItem: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseDayViewHolder {
+
         return ExerciseDayViewHolder(
-            ListItemExerciseDayBinding.inflate(
+            DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
+                R.layout.list_item_exercise_day,
                 parent,
                 false
-            ), ExerciseDayExerciseRecyclerViewAdapter()
+            ),
+            ExerciseDayExerciseRecyclerViewAdapter()
         )
+
     }
 
     override fun onBindViewHolder(holder: ExerciseDayViewHolder, position: Int) {
-        if (!holder.bound) {
-            holder.bound = true
-            holder.binding.etExerciseDayName.requestFocus()
-        }
+        holder.binding.exerciseDayData = exerciseList[position]
+
         if (selectedItem != position) {
             holder.binding.root.setBackgroundColor(Color.RED)
             holder.binding.rvExercises.visibility = View.GONE
+            holder.binding.etLayoutExerciseDayName.visibility = View.GONE
+            holder.binding.tvExerciseDayName.visibility = View.VISIBLE
+            holder.binding.tvExerciseDayName.text = holder.binding.etExerciseDayName.text
         } else {
             holder.binding.root.setBackgroundColor(Color.GREEN)
             holder.binding.rvExercises.visibility = View.VISIBLE
+            holder.binding.etLayoutExerciseDayName.visibility = View.VISIBLE
+            holder.binding.tvExerciseDayName.visibility = View.GONE
+            holder.binding.etExerciseDayName.requestFocus()
+
         }
         holder.binding.root.setOnClickListener {
-            holder.binding.etExerciseDayName.requestFocus()//TODO
-            // setSelection(position)
+            setSelection(position)
+
         }
 
-        holder.binding.etExerciseDayName.onFocusChangeListener =
-            View.OnFocusChangeListener { _, hasFocus -> if (hasFocus) setSelection(position) }
 
     }
 
@@ -56,23 +72,24 @@ class ExerciseDayRecyclerViewAdapter :
     }
 
     override fun getItemCount(): Int {
-        return size
+        return exerciseList.size
     }
 
     fun addView() {
         val tmp = selectedItem
-        selectedItem = size++
+        exerciseList.add(NewExerciseDayData(MutableLiveData(""), ArrayList()))
+        selectedItem = exerciseList.size - 1
         notifyItemChanged(tmp)
-        notifyItemInserted(size - 1)
+        notifyItemInserted(exerciseList.size - 1)
     }
 
     inner class ExerciseDayViewHolder(
         val binding: ListItemExerciseDayBinding,
-        val adapter: ExerciseDayExerciseRecyclerViewAdapter
+        val adapter: ExerciseDayExerciseRecyclerViewAdapter,
     ) : RecyclerView.ViewHolder(binding.root) {
-        var bound = false
 
         init {
+            binding.lifecycleOwner = binding.root.findViewTreeLifecycleOwner()
             binding.rvExercises.adapter = adapter
             binding.rvExercises.layoutManager = LinearLayoutManager(binding.root.context)
 
