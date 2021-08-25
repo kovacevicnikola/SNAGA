@@ -8,4 +8,9 @@ import rs.magus.snaga.repository.datasources.db.entities.baseEntities.BaseEntity
 data class ExerciseEntity(
     val name: String,
     val description: String
-) : BaseEntity()
+
+) : BaseEntity() {
+    override fun toString(): String {
+        return name
+    }
+}

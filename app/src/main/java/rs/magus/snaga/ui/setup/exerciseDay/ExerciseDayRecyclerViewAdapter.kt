@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import rs.magus.snaga.R
 import rs.magus.snaga.databinding.ListItemExerciseDayBinding
 import rs.magus.snaga.pojo.models.NewExerciseDayData
+import rs.magus.snaga.repository.datasources.db.entities.ExerciseEntity
 
-class ExerciseDayRecyclerViewAdapter :
+class ExerciseDayRecyclerViewAdapter(
+    private val exercises : List<ExerciseEntity>
+) :
     RecyclerView.Adapter<ExerciseDayRecyclerViewAdapter.ExerciseDayViewHolder>() {
-    var exerciseList: MutableList<NewExerciseDayData> = ArrayList(
+    var exerciseDataList: MutableList<NewExerciseDayData> = ArrayList(
         mutableListOf(
             NewExerciseDayData(
                 MutableLiveData(""), ArrayList()
@@ -33,13 +36,13 @@ class ExerciseDayRecyclerViewAdapter :
                 parent,
                 false
             ),
-            ExerciseDayExerciseRecyclerViewAdapter()
+            ExerciseDayExerciseRecyclerViewAdapter(exercises)
         )
 
     }
 
     override fun onBindViewHolder(holder: ExerciseDayViewHolder, position: Int) {
-        holder.binding.exerciseDayData = exerciseList[position]
+        holder.binding.exerciseDayData = exerciseDataList[position]
 
         if (selectedItem != position) {
             holder.binding.root.setBackgroundColor(Color.RED)
@@ -59,7 +62,7 @@ class ExerciseDayRecyclerViewAdapter :
             setSelection(position)
 
         }
-
+        holder.binding.
 
     }
 
@@ -72,15 +75,15 @@ class ExerciseDayRecyclerViewAdapter :
     }
 
     override fun getItemCount(): Int {
-        return exerciseList.size
+        return exerciseDataList.size
     }
 
     fun addView() {
         val tmp = selectedItem
-        exerciseList.add(NewExerciseDayData(MutableLiveData(""), ArrayList()))
-        selectedItem = exerciseList.size - 1
+        exerciseDataList.add(NewExerciseDayData(MutableLiveData(""), ArrayList()))
+        selectedItem = exerciseDataList.size - 1
         notifyItemChanged(tmp)
-        notifyItemInserted(exerciseList.size - 1)
+        notifyItemInserted(exerciseDataList.size - 1)
     }
 
     inner class ExerciseDayViewHolder(

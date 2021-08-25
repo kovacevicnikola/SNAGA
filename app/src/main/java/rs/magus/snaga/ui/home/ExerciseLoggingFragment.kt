@@ -63,7 +63,6 @@ class ExerciseLoggingFragment : Fragment() {
     }
     binding.bSubmit.setOnClickListener {
       handleSubmitPressed()
-
     }
     return binding.root
   }

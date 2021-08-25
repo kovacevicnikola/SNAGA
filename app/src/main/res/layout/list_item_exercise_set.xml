@@ -2,12 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
 
-        <variable
-            name="selectedExercise"
-            type="rs.magus.snaga.pojo.models.ExerciseData" />
-    </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/llNumberPickers"
@@ -21,7 +16,7 @@
             android:id="@+id/npSets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:value="@{selectedExercise.defaultSets}"
+            android:value="@{3}"
             app:maxValue="@{120}"
             app:minValue="@{1}" />
 
@@ -34,7 +29,7 @@
             android:id="@+id/npReps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:value="@{selectedExercise.defaultReps}"
+            android:value="@{12}"
             app:maxValue="@{120}"
             app:minValue="@{1}" />
 

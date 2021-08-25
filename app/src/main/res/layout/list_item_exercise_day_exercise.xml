@@ -2,12 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
 
-        <variable
-            name="selectedExercise"
-            type="rs.magus.snaga.pojo.models.ExerciseData" />
-    </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -18,11 +13,10 @@
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:id="@+id/etAutocomplete"/>
 
         <include
-            layout="@layout/list_item_exercise_set"
-
-            app:selectedExercise="@{selectedExercise}" />
+            layout="@layout/list_item_exercise_set" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
