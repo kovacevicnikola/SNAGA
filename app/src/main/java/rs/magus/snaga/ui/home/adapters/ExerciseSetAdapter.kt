@@ -53,7 +53,7 @@ class ExerciseSetAdapter(
     inner class ExerciseSetViewHolder(val binding: ListItemExerciseSetBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(exerciseData: ExerciseData?) {
-            binding.selectedExercise = exerciseData
+            //binding.selectedExercise = exerciseData
             binding.npSets.value = 1
         }
 

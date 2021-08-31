@@ -45,10 +45,10 @@ abstract class AppDatabase : RoomDatabase() {
                 super.onCreate(db)
 
                 db.execSQL(
-                    "INSERT INTO `Exercises` ('name', 'group') VALUES ('Deadlift', 1), ('Lat pulldown', 1)," +
-                            "('Rows', 1) , ('Bench Press', 2); "
+                    "INSERT INTO `Exercises` ('name', 'description') VALUES ('Deadlift', '1'), ('Lat pulldown', '1')," +
+                            "('Rows', '1') , ('Bench Press', '2'); "
                 )
-                db.execSQL("INSERT INTO `ExerciseGroups` ('name', 'id') VALUES ('Back', 1), ('Chest', 2)")
+                db.execSQL("INSERT INTO `ExerciseGroups` ('name', 'id', 'description') VALUES ('Back', 1, 'sadf'), ('Chest', 2, 'asdf')")
             }
         }
     }

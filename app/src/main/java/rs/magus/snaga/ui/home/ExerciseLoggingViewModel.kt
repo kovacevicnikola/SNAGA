@@ -21,8 +21,7 @@ class ExerciseLoggingViewModel(application: Application) : AndroidViewModel(appl
         return repository.logExercises(entities)
     }
     suspend fun getExercisesFromDB(): List<ExerciseData> {
-        exercises = repository.getExercises()
-        return exercises
+        return ArrayList()
     }
 
 }

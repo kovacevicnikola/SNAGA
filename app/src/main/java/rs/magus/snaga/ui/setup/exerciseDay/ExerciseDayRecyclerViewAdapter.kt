@@ -1,6 +1,5 @@
 package rs.magus.snaga.ui.setup.exerciseDay
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,15 +42,20 @@ class ExerciseDayRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ExerciseDayViewHolder, position: Int) {
         holder.binding.exerciseDayData = exerciseDataList[position]
-
+        if (position == 0) holder.binding.bRemove.visibility = View.GONE
+        else holder.binding.bRemove.visibility = View.VISIBLE
+        holder.binding.bRemove.setOnClickListener {
+            exerciseDataList.removeAt(position)
+            notifyItemRemoved(position)
+        }
         if (selectedItem != position) {
-            holder.binding.root.setBackgroundColor(Color.RED)
+            //holder.binding.root.setBackgroundColor(Color.RED)
             holder.binding.rvExercises.visibility = View.GONE
             holder.binding.etLayoutExerciseDayName.visibility = View.GONE
             holder.binding.tvExerciseDayName.visibility = View.VISIBLE
             holder.binding.tvExerciseDayName.text = holder.binding.etExerciseDayName.text
         } else {
-            holder.binding.root.setBackgroundColor(Color.GREEN)
+            // holder.binding.root.setBackgroundColor(Color.GREEN)
             holder.binding.rvExercises.visibility = View.VISIBLE
             holder.binding.etLayoutExerciseDayName.visibility = View.VISIBLE
             holder.binding.tvExerciseDayName.visibility = View.GONE
@@ -62,7 +66,7 @@ class ExerciseDayRecyclerViewAdapter(
             setSelection(position)
 
         }
-        holder.binding.
+
 
     }
 

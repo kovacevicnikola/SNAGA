@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="4dp">
 
     <data>
 
@@ -8,17 +10,23 @@
             type="rs.magus.snaga.pojo.models.NewExerciseDayData" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="8dp">
+        app:cardElevation="4dp"
+        app:strokeWidth="4dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="8dp">
 
@@ -47,20 +55,22 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/bEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_edit" />
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/bRemove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/ic_baseline_close_24" />
 
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/rvExercises"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="2"
+                tools:listitem="@layout/list_item_exercise_day_exercise" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
 
-        <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/rvExercises"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:itemCount="2"
-            tools:listitem="@layout/list_item_exercise_day_exercise" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
