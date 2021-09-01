@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
 
+        <variable
+            name="exerciseDayData"
+            type="rs.magus.snaga.pojo.models.ExerciseData" />
+    </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/etAutocomplete"/>
 
-        <include
-            layout="@layout/list_item_exercise_set" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:id="@+id/etAutocomplete" />
+
+        <!--        <include-->
+        <!--            layout="@layout/list_item_exercise_set" />-->
+    </LinearLayout>
 </layout>

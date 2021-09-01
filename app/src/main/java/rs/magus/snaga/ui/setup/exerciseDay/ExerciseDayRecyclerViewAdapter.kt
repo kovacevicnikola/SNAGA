@@ -25,7 +25,7 @@ class ExerciseDayRecyclerViewAdapter(
         )
     )
     private var selectedItem: Int = 0
-
+    private var adapterList: MutableList<ExerciseDayRecyclerViewAdapter> = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseDayViewHolder {
 
         return ExerciseDayViewHolder(
@@ -51,12 +51,14 @@ class ExerciseDayRecyclerViewAdapter(
         if (selectedItem != position) {
             //holder.binding.root.setBackgroundColor(Color.RED)
             holder.binding.rvExercises.visibility = View.GONE
+            holder.binding.bAddExercise.visibility = View.GONE
             holder.binding.etLayoutExerciseDayName.visibility = View.GONE
             holder.binding.tvExerciseDayName.visibility = View.VISIBLE
             holder.binding.tvExerciseDayName.text = holder.binding.etExerciseDayName.text
         } else {
             // holder.binding.root.setBackgroundColor(Color.GREEN)
             holder.binding.rvExercises.visibility = View.VISIBLE
+            holder.binding.bAddExercise.visibility = View.VISIBLE
             holder.binding.etLayoutExerciseDayName.visibility = View.VISIBLE
             holder.binding.tvExerciseDayName.visibility = View.GONE
             holder.binding.etExerciseDayName.requestFocus()
@@ -66,7 +68,7 @@ class ExerciseDayRecyclerViewAdapter(
             setSelection(position)
 
         }
-
+        holder.binding.bAddExercise.setOnClickListener { holder.adapter.addExercise() }
 
     }
 

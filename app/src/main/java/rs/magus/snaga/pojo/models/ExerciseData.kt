@@ -1,16 +1,12 @@
 package rs.magus.snaga.pojo.models
 
+import androidx.databinding.ObservableInt
+import androidx.lifecycle.MutableLiveData
 import rs.magus.snaga.repository.datasources.db.entities.ExerciseEntity
 
 data class ExerciseData(
-    val exercise: ExerciseEntity,
-    val sets: Int,
-    val reps: Int
+    val exercise: MutableLiveData<ExerciseEntity> = MutableLiveData(),
+    val sets: ObservableInt = ObservableInt(),
+    val reps: ObservableInt = ObservableInt()
 
-) {
-    // @Ignore val repsSetsAndWeight: List<RepsSetsAndWeight> = ArrayList()
-
-    override fun toString(): String {
-        return exercise.name
-    }
-}
+)

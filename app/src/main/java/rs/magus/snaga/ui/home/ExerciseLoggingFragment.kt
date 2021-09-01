@@ -2,7 +2,6 @@ package rs.magus.snaga.ui.home
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +17,7 @@ import kotlinx.coroutines.launch
 import rs.magus.snaga.R
 import rs.magus.snaga.databinding.FragmentExerciseLoggingBinding
 import rs.magus.snaga.pojo.models.ExerciseData
-import rs.magus.snaga.repository.datasources.db.entities.ExerciseLogEntity
 import rs.magus.snaga.ui.home.adapters.ExerciseSetAdapter
-import java.time.LocalDateTime
-import kotlin.math.roundToInt
 
 class ExerciseLoggingFragment : Fragment() {
 
@@ -73,7 +69,7 @@ class ExerciseLoggingFragment : Fragment() {
         exerciseLoggingViewModel.logExercises(exerciseSetAdapter.getSets())
       }
     } else {
-      binding.autoComplete.requestFocus()
+      if (binding.autoComplete.text.isEmpty()) binding.autoComplete.requestFocus()
       binding.autoComplete.error = "You need to fill out this field!"
     }
   }
