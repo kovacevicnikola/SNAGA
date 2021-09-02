@@ -1,5 +1,6 @@
 package rs.magus.snaga.ui.setup.exerciseDay
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -16,7 +17,7 @@ class ExerciseDayExerciseRecyclerViewAdapter(
     private val exercises : List<ExerciseEntity>
 ) :
     RecyclerView.Adapter<ExerciseDayExerciseRecyclerViewAdapter.ExerciseDayExerciseViewHolder>() {
-    val exerciseList: MutableList<ExerciseData> = ArrayList()
+    var exerciseList: MutableList<ExerciseData> = ArrayList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,7 +32,7 @@ class ExerciseDayExerciseRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ExerciseDayExerciseViewHolder, position: Int) {
-
+        holder.binding.exerciseData = exerciseList[position]
         holder.binding.etAutocomplete.setAdapter(
             ArrayAdapter(
                 holder.binding.root.context,
@@ -43,7 +44,8 @@ class ExerciseDayExerciseRecyclerViewAdapter(
         holder.binding.etAutocomplete.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, listPosition, id ->
                 if (parent.getItemAtPosition(listPosition) != null)
-                    exerciseList[position].exercise.postValue(parent.getItemAtPosition(listPosition)!! as ExerciseEntity)
+                    exerciseList[position].exercise =
+                        parent.getItemAtPosition(listPosition)!! as ExerciseEntity
             }
 
 
@@ -57,6 +59,12 @@ class ExerciseDayExerciseRecyclerViewAdapter(
     fun addExercise() {
         exerciseList.add(ExerciseData())
         notifyItemInserted(exerciseList.size - 1)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun bindData(displayExercises: MutableList<ExerciseData>) {
+        exerciseList = displayExercises
+        notifyDataSetChanged()
     }
 
     inner class ExerciseDayExerciseViewHolder(val binding: ListItemExerciseDayExerciseBinding) :

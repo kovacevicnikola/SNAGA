@@ -5,5 +5,6 @@ import rs.magus.snaga.repository.datasources.db.entities.ExerciseDayExerciseEnti
 
 data class NewExerciseDayData(
     val name: MutableLiveData<String>,
-    val exercises: List<ExerciseDayExerciseEntity>
+    val exercises: List<ExerciseDayExerciseEntity>,
+    val displayExercises: MutableList<ExerciseData>
 )

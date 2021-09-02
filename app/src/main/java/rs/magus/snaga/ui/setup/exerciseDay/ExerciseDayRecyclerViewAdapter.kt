@@ -20,12 +20,13 @@ class ExerciseDayRecyclerViewAdapter(
     var exerciseDataList: MutableList<NewExerciseDayData> = ArrayList(
         mutableListOf(
             NewExerciseDayData(
-                MutableLiveData(""), ArrayList()
+                MutableLiveData(""), ArrayList(), ArrayList()
             )
         )
     )
     private var selectedItem: Int = 0
-    private var adapterList: MutableList<ExerciseDayRecyclerViewAdapter> = ArrayList()
+    private val adapter: ExerciseDayExerciseRecyclerViewAdapter =
+        ExerciseDayExerciseRecyclerViewAdapter(exercises)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseDayViewHolder {
 
         return ExerciseDayViewHolder(
@@ -34,19 +35,21 @@ class ExerciseDayRecyclerViewAdapter(
                 R.layout.list_item_exercise_day,
                 parent,
                 false
-            ),
-            ExerciseDayExerciseRecyclerViewAdapter(exercises)
+            )
         )
 
     }
 
     override fun onBindViewHolder(holder: ExerciseDayViewHolder, position: Int) {
         holder.binding.exerciseDayData = exerciseDataList[position]
-        if (position == 0) holder.binding.bRemove.visibility = View.GONE
+        holder.binding.rvExercises.adapter = adapter
+        adapter.bindData(exerciseDataList[position].displayExercises)
+        if (itemCount == 1 && position == 0) holder.binding.bRemove.visibility = View.GONE
         else holder.binding.bRemove.visibility = View.VISIBLE
         holder.binding.bRemove.setOnClickListener {
             exerciseDataList.removeAt(position)
             notifyItemRemoved(position)
+            if (itemCount == 1) notifyItemChanged(0)
         }
         if (selectedItem != position) {
             //holder.binding.root.setBackgroundColor(Color.RED)
@@ -68,7 +71,7 @@ class ExerciseDayRecyclerViewAdapter(
             setSelection(position)
 
         }
-        holder.binding.bAddExercise.setOnClickListener { holder.adapter.addExercise() }
+        holder.binding.bAddExercise.setOnClickListener { adapter.addExercise() }
 
     }
 
@@ -86,7 +89,7 @@ class ExerciseDayRecyclerViewAdapter(
 
     fun addView() {
         val tmp = selectedItem
-        exerciseDataList.add(NewExerciseDayData(MutableLiveData(""), ArrayList()))
+        exerciseDataList.add(NewExerciseDayData(MutableLiveData(""), ArrayList(), ArrayList()))
         selectedItem = exerciseDataList.size - 1
         notifyItemChanged(tmp)
         notifyItemInserted(exerciseDataList.size - 1)
@@ -94,12 +97,10 @@ class ExerciseDayRecyclerViewAdapter(
 
     inner class ExerciseDayViewHolder(
         val binding: ListItemExerciseDayBinding,
-        val adapter: ExerciseDayExerciseRecyclerViewAdapter,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.lifecycleOwner = binding.root.findViewTreeLifecycleOwner()
-            binding.rvExercises.adapter = adapter
             binding.rvExercises.layoutManager = LinearLayoutManager(binding.root.context)
 
 
